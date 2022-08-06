@@ -7,7 +7,7 @@ async function getLocation(req, res){
         res.json(ipLocation);
     } catch (error) {
         const {status, ...rest} = error;
-        res.status(status).json(rest);
+        res.status(status || 500).json(rest);
     }
 
     

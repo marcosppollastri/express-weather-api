@@ -1,10 +1,10 @@
-const randomIpv4 = require('random-ipv4');
+const {randomIp} = require('./helpers/randomIp');
 
 module.exports = {
     normalizeIp: (req, res, next) => {
         const env = process.env.NODE_ENV;
         if (env === 'development') {
-            req.normalizedIp = randomIpv4();
+            req.normalizedIp = randomIp().ip;
         } else {
             req.normalizedIp = req.ip;
         }
