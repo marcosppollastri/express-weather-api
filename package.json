@@ -1,6 +1,7 @@
 {
   "name": "weather-api",
-  "version": "1.0.0",
+  "version": "1.2.0",
+  "author": "Marcos J. Peña Pollastri",
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
@@ -13,8 +14,7 @@
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
-    "node-fetch": "^3.2.10",
-    "random-ipv4": "^1.0.2"
+    "node-fetch": "^3.2.10"
   },
   "devDependencies": {
     "nodemon": "^2.0.18"
