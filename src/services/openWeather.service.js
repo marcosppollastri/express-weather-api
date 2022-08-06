@@ -3,7 +3,7 @@ const config = require('config');
 const {basepath, apiKey} = config.get('services.openWeather');
 const {getIpLocation} = require('./ipApi.service');
 
-async function currentWeather(city, ip) {
+async function weatherService(service, city, ip) {
     if (!city) {
         city = await getCityByIp(ip);
     }
@@ -12,7 +12,7 @@ async function currentWeather(city, ip) {
         appid: apiKey,
 
     }).toString();
-    const response = await fetch(`${basepath}/weather?${params}`);
+    const response = await fetch(`${basepath}/${service}?${params}`);
     const data = await response.json();
 
     return data;
@@ -24,4 +24,4 @@ async function getCityByIp(ip){
     return data.city;
 }
 
-module.exports = {currentWeather};
+module.exports = {weatherService};
