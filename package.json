@@ -1,6 +1,6 @@
 {
   "name": "weather-api",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "author": "Marcos J. Peña Pollastri",
   "private": true,
   "scripts": {
