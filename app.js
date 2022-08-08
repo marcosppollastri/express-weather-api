@@ -5,7 +5,7 @@ const logger = require('morgan');
 const config = require('config');
 
 const indexRouter = require('./src/routes/index');
-const { errorHandler } = require('./src/middleware/herrorHandler');
+const { errorHandler } = require('./src/middleware/errorHandler');
 const app = express();
 app.enable('trust proxy');
 app.use(logger('dev'));

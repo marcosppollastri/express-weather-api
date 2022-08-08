@@ -15,7 +15,7 @@ async function weatherService(service, city, ip) {
         }).toString();
         const response = await fetch(`${basepath}${service}?${params}`);
         const data = await response.json();
-        if (data.cod !== 200) {
+        if (data.cod !== '200') {
             const err = new Error();
             Object.assign(err, {
                 code: 'weather_service_error',
