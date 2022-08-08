@@ -1,13 +1,12 @@
 const { getIpLocation } = require('../services/ipApi.service');
 
-async function getLocation(req, res){
+async function getLocation(req, res, next){
     try {
         const ip = req.normalizedIp;
         const ipLocation = await getIpLocation(ip);
         res.json(ipLocation);
-    } catch (error) {
-        const {status, ...rest} = error;
-        res.status(status || 500).json(rest);
+    } catch (err) {
+        next(err)
     }
 
     

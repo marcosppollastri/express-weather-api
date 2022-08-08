@@ -1,0 +1,18 @@
+{
+    "bad_request": {
+        "status": 400,
+        "message": "Bad request"
+    },
+    "service_unavailable": {
+        "status": 503,
+        "message": "Service unavailable"
+    },
+    "weather_service_error": {
+        "status": 503,
+        "message": "Error with Open Weather Service"
+    },
+    "ip_api_error": {
+        "status": 500,
+        "message": "Error with IP API service"
+    }
+}
