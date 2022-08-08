@@ -1,5 +1,7 @@
 # ![Open Weather](https://raw.githubusercontent.com/bugsounet/MMM-Weather/master/logo.png)
 
+# Open API Spec
+You can check this API Spec on [SwaggerHub.](https://app.swaggerhub.com/apis-docs/MARCOSPPOLLASTRI_1/express-weather-api/1.3.0#/)
 
 # Getting started
 
