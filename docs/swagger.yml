@@ -1,0 +1,474 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: v1 url
+    url: https://marcospp-weather-api.herokuapp.com/v1
+info:
+  description: Simple Express weather API
+  version: "1.3.0"
+  title: Express Weather API
+  contact:
+    email: marcos.p.pollastri@gmail.com
+  license: 
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+tags:
+  - name: open-weather
+    description: The operation uses the Open Weather API service
+  - name: ip-api
+    description: The operation uses the IP-API service
+paths:
+  /location:
+    get:
+      tags:
+        - ip-api
+      summary: get the clients location by ip
+      operationId: getLocationByIp
+      description: |
+        Gets the client current location based on the request IP.
+      responses:
+        '200':
+          description: location results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '500':
+          description: Ip API error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpApiError'
+  /current:
+    get:
+      tags:
+        - open-weather
+        - ip-api
+      summary: get the current weather based on the client IP
+      operationId: getCurrentCityWeatherByIp
+      description: |
+        Get the current weather from Open Weather API using the client IP.
+      responses:
+        '200':
+          description: weather results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentWeather'
+        '404':
+          description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityNotFound'
+  /current/{city}:
+    get:
+      tags:
+        - open-weather
+      summary: get the current weather for the city parameter
+      operationId: getCurrentCityWeather
+      description: |
+        Get the current weather from Open Weather API using the city parameter
+      parameters:
+        - in: path
+          name: city
+          description: city to get the weather for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: weather results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentWeather'
+        '404':
+          description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityNotFound'
+  /forecast:
+     get:
+      tags:
+        - open-weather
+        - ip-api
+      summary: get the next 5 days forecast (on 3 hours interval) based on the client IP
+      operationId: getForecastByIp
+      description: |
+        Get the next 5 days forecast from Open Weather API using the client IP.
+      responses:
+        '200':
+          description: forecast results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+        '404':
+          description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityNotFound'
+  /forecast/{city}:
+     get:
+      tags:
+        - open-weather
+      summary: get the next 5 days forecast (on 3 hours interval) based on the city parameter
+      operationId: getForecastByCity
+      description: |
+        Get the next 5 days forecast from Open Weather API using the city parameter.
+      parameters:
+        - in: path
+          name: city
+          description: city to get the forecast for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: forecast results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+        '404':
+          description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityNotFound'
+
+components:
+  schemas:
+    CurrentWeather:
+      type: object
+      properties: 
+        coord: 
+          type: object
+          properties: 
+            lon: 
+              type: number
+              example: -2.5
+            lat: 
+              type: number
+              example: 42.25
+        weather: 
+          type: array
+          items: 
+            type: object
+            properties: 
+              id: 
+                type: integer
+                format: int32
+                example: 500
+              main: 
+                type: string
+                example: Rain
+              description: 
+                type: string
+                example: light rain
+              icon: 
+                type: string
+                example: 10d
+        base: 
+          type: string
+          example: stations
+        main: 
+          type: object
+          properties: 
+            temp: 
+              type: number
+              example: 304.03
+            feels_like: 
+              type: number
+              example: 302.67
+            temp_min: 
+              type: number
+              example: 304.03
+            temp_max: 
+              type: number
+              example: 304.03
+            pressure: 
+              type: integer
+              format: int32
+              example: 1014
+            humidity: 
+              type: integer
+              format: int32
+              example: 29
+            sea_level: 
+              type: integer
+              format: int32
+              example: 1014
+            grnd_level: 
+              type: integer
+              format: int32
+              example: 909
+        visibility: 
+          type: integer
+          format: int32
+          example: 10000
+        wind: 
+          type: object
+          properties: 
+            speed: 
+              type: number
+              example: 4.12
+            deg: 
+              type: integer
+              format: int32
+              example: 62
+            gust: 
+              type: number
+              example: 4.12
+        rain: 
+          type: object
+          properties: 
+            1h: 
+              type: number
+              example: 0.75
+        clouds: 
+          type: object
+          properties: 
+            all: 
+              type: integer
+              format: int32
+              example: 80
+        dt: 
+          type: integer
+          format: int32
+          example: 1659973091
+        sys: 
+          type: object
+          properties: 
+            type: 
+              type: integer
+              format: int32
+              example: 1
+            id: 
+              type: integer
+              format: int32
+              example: 6418
+            country: 
+              type: string
+              example: ES
+            sunrise: 
+              type: integer
+              format: int32
+              example: 1659935390
+            sunset: 
+              type: integer
+              format: int32
+              example: 1659986494
+        timezone: 
+          type: integer
+          format: int32
+          example: 7200
+        id: 
+          type: integer
+          format: int32
+          example: 3336897
+        name: 
+          type: string
+          example: La Rioja
+        cod: 
+          type: integer
+          format: int32
+          example: 200
+    CityNotFound:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: weather_service_error
+        details: 
+          type: object
+          properties: 
+            cod: 
+              type: string
+              example: 404
+            message: 
+              type: string
+              example: city not found
+        message: 
+          type: string
+          example: Error with Open Weather Service
+    Forecast:
+      type: object
+      properties:
+        cod: 
+          type: string
+          example: 200
+        message: 
+          type: number
+          example: 0
+        cnt: 
+          type: number
+          example: 40
+        list: 
+          type: array
+          items: 
+            type: object
+            properties: 
+              dt: 
+                type: number
+                example: 1659981600
+              main: 
+                type: object
+                properties: 
+                  temp: 
+                    type: number
+                    example: 282.08
+                  feels_like: 
+                    type: number
+                    example: 279.35
+                  temp_min: 
+                    type: number
+                    example: 282.08
+                  temp_max: 
+                    type: number
+                    example: 282.15
+                  pressure: 
+                    type: number
+                    example: 974
+                  sea_level: 
+                    type: number
+                    example: 974
+                  grnd_level: 
+                    type: number
+                    example: 978
+                  humidity: 
+                    type: number
+                    example: 89
+                  temp_kf: 
+                    type: number
+                    example: -0.07
+              weather: 
+                type: array
+                items: 
+                  type: object
+                  properties: 
+                    id: 
+                      type: number
+                      example: 500
+                    main: 
+                      type: string
+                      example: Rain
+                    description: 
+                      type: string
+                      example: light rain
+                    icon: 
+                      type: string
+                      example: 10d
+              clouds: 
+                type: object
+                properties: 
+                  all: 
+                    type: number
+                    example: 99
+              wind: 
+                type: object
+                properties: 
+                  speed: 
+                    type: number
+                    example: 5.14
+                  deg: 
+                    type: number
+                    example: 186
+                  gust: 
+                    type: number
+                    example: 6.52
+              visibility: 
+                type: number
+                example: 10000
+              pop: 
+                type: number
+                example: 0.53
+              rain: 
+                type: object
+                properties: 
+                  3h: 
+                    type: number
+                    example: 0.48
+              sys: 
+                type: object
+                properties: 
+                  pod: 
+                    type: string
+                    example: d
+              dt_txt: 
+                type: string
+                example: 2022-08-08 18:00:00
+        city: 
+          type: object
+          properties: 
+            id: 
+              type: number
+              example: 3860259
+            name: 
+              type: string
+              example: Córdoba
+            coord: 
+              type: object
+              properties: 
+                lat: 
+                  type: number
+                  example: -31.4135
+                lon: 
+                  type: number
+                  example: -64.1811
+            country: 
+              type: string
+              example: AR
+            population: 
+              type: number
+              example: 1428214
+            timezone: 
+              type: number
+              example: -10800
+            sunrise: 
+              type: number
+              example: 1659956335
+            sunset: 
+              type: number
+              example: 1659995153
+    Location:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: success
+        country: 
+          type: string
+          example: Argentina
+        city: 
+          type: string
+          example: Villa Anizacate
+        query: 
+          type: string
+          example: 100.10.100.100
+    IpApiError:
+      type: object
+      properties:
+          code: 
+            type: string
+            example: ip_api_error
+          details: 
+            type: object
+            properties: 
+              status: 
+                type: string
+                example: fail
+              message: 
+                type: string
+                example: reserved range
+              query: 
+                type: string
+                example: ::1
+          message: 
+            type: string
+            example: Error with IP API service
+
+  
