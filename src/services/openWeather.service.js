@@ -3,13 +3,16 @@ const config = require('config');
 const {basepath, apiKey} = config.get('services.openWeather');
 const {getIpLocation} = require('./ipApi.service');
 
-async function weatherService(service, city, ip) {
+async function weatherService(options, ip) {
+    const { city, units, service } = options;
+    let cityByIp;
     try {
         if (!city) {
-            city = await getCityByIp(ip);
+            cityByIp = await getCityByIp(ip);
         }
         const params = new URLSearchParams({
-            q: city,
+            q: city || cityByIp,
+            units: units || 'metric',
             appid: apiKey,
     
         }).toString();
