@@ -11,5 +11,11 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
+    'no-shadow': [
+      'error',
+      {
+        allow: ['setFilter'],
+      },
+    ],
   },
 };
